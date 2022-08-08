@@ -1,7 +1,8 @@
 let dates = {
     myDate,
     today,
-    month
+    month,
+    printDate
 }
 
 function myDate(req, res, next) {
@@ -18,6 +19,11 @@ function today(req, res, next) {
 function month(req, res, next) {
     let today = req.date;
     req.month = today.getMonth();
+    next();
+}
+
+function printDate(req,res,next){
+    console.log(req.date);
     next();
 }
 
