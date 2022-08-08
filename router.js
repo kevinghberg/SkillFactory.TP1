@@ -11,6 +11,7 @@ router.get('/products',productController.getProducts);
 router.get('/prices', productController.getProductPrices);
 router.get('/products/:id', productController.getProductById);
 router.get('/products/categories/:category',productController.getProductsByCategory);
+router.get('/expensive', productController.getExpensiveProducts);
 
 
 /*Users*/

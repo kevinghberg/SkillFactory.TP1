@@ -39,11 +39,29 @@ const getProductPrices = async (req, res) => {
     res.status(200).send(products2);
 }
 
+const getExpensiveProducts = async (req, res) => {
+    let products = await modelProducto.getProducts();
+    let categories = await modelProducto.getCategories();
+    let expensive = [];
+
+    categories.forEach(element => {
+        let aux = products.filter(products => products.category == element);
+        aux.sort((a, b) => b.price - a.price);
+        expensive.push(aux[0]);
+    });
+    
+    res.status(200).send(expensive);
+}
+
+
+
+
+
 function sortProductsByPrice(products, order) {
 
     if (order === 'ASC') /* arreglar valdiacion case sensitive */
         products = products.sort((a, b) => a.price - b.price);
-    if (order === 'DESC') 
+    if (order === 'DESC')
         products = products.sort((a, b) => b.price - a.price);
     return products;
 }
@@ -54,7 +72,8 @@ const controllerProducto = {
     getProductsByCategory,
     getProducts,
     getProductById,
-    getProductPrices
+    getProductPrices,
+    getExpensiveProducts,
 
 }
 
