@@ -1,11 +1,9 @@
 const notFound = (req, res, next) => {
-    const err = new Error("Pagina no encontrada");
-    err.status = 404;
-    return next(err); 
-  }
+  return res.status(404).json({ message: "Pagina no encontrada" });
+};
 
 const errorHandler = {
-    notFound
-}
+  notFound,
+};
 
 module.exports = errorHandler;

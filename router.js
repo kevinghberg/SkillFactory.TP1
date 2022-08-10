@@ -1,31 +1,33 @@
 const express = require ('express');
 const router = express.Router();
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const dates = require('./middlewares/printDate.js')
-const errorHandler = require('./middlewares/errorHandler.js')
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const infoToConsole = require('./middlewares/printInfo.js');
+const errorHandler = require('./middlewares/errorHandler.js');
+const orderHandler = require('./middlewares/orderHandler');
 
 const productController = require('./controllers/controllerProducto.js');
 const userController = require('./controllers/controllerUsuario.js');
-const cartController = require('./controllers/controllerCarrito.js')
+const cartController = require('./controllers/controllerCarrito.js');
+
 
 /* Products */
-router.get('/products',[dates.myDate, dates.today, dates.month, dates.printDate], productController.getProducts);
-router.get('/prices', productController.getProductPrices);
-router.get('/products/:id', productController.getProductById);
-router.get('/products/categories/:category',productController.getProductsByCategory);
-router.get('/expensive', productController.getExpensiveProducts);
+router.get('/products',[infoToConsole.printDate,infoToConsole.printMethod], productController.getProducts);
+router.get('/prices',[infoToConsole.printDate,infoToConsole.printMethod,orderHandler.handleOrder],productController.getProductPrices);
+router.get('/products/:id',[infoToConsole.printDate,infoToConsole.printMethod], productController.getProductById);
+router.get('/products/categories/:category',[infoToConsole.printDate,infoToConsole.printMethod],productController.getProductsByCategory);
+router.get('/expensive',[infoToConsole.printDate,infoToConsole.printMethod], productController.getExpensiveProducts);
 
 
 /*Users*/
-router.get('/users',userController.getUsers);
-router.get('/users/firsts', userController.getFirstsUsers);
-router.get('/users/:id', userController.getUser);
+router.get('/users',[infoToConsole.printDate,infoToConsole.printMethod],userController.getUsers);
+router.get('/users/firsts', [infoToConsole.printDate,infoToConsole.printMethod],userController.getFirstsUsers);
+router.get('/users/:id',[infoToConsole.printDate,infoToConsole.printMethod], userController.getUser);
 
 
 /* Cart */
-router.get('/carts', cartController.getAllCarts);
-router.get('/carts/:id', cartController.getCartByID);
-router.get('/bigcarts', cartController.getBigCarts);
+router.get('/carts',[infoToConsole.printDate,infoToConsole.printMethod], cartController.getAllCarts);
+router.get('/carts/:id', [infoToConsole.printDate,infoToConsole.printMethod],cartController.getCartByID);
+router.get('/bigcarts',[infoToConsole.printDate,infoToConsole.printMethod], cartController.getBigCarts);
 
 
 router.use(errorHandler.notFound);
