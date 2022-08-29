@@ -14,18 +14,18 @@ const getProductsByCategory = async (req, res) => {
   let productsByCategories = await modelProducto.getProductByCategory(
     req.params.category
   );
-  let productsByCategories2 = productsByCategories.map((res) => {
+  productsByCategories = productsByCategories.map((res) => {
     return {
       title: res.title,
       category: res.category,
     };
   });
-  res.status(200).send(productsByCategories2);
+  res.status(200).send(productsByCategories);
 };
 
 const getProductPrices = async (req, res) => {
   let products = await modelProducto.getProducts();
-  let products2 = products.map((res) => {
+  products = products.map((res) => {
     return {
       id: res.id,
       title: res.title,
@@ -33,8 +33,8 @@ const getProductPrices = async (req, res) => {
     };
   });
   let order = req.query.order;
-  products2 = sortProductsByPrice(products2, order);
-  res.status(200).send(products2);
+  products = sortProductsByPrice(products, order);
+  res.status(200).send(products);
 };
 
 const getExpensiveProducts = async (req, res) => {

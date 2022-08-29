@@ -1,10 +1,10 @@
 const modelUsuario = require('../models/modelUsuario');
+
 const getUsers = async (req, res) => {
     let users = [];
     if (req.query.limit) {
         users = await modelUsuario.getUsersWithLimit(req.query.limit);
         users.sort((a, b) => b.id - a.id);
-
     } else {
         users = await modelUsuario.getUsers();
     }
@@ -17,7 +17,6 @@ const getUser = async (req, res) => {
 }
 
 const getFirstsUsers = async (req, res) => {
-    console.log('asdasd');
     let users = await modelUsuario.getUsersWithLimit(3);
     console.log(users);
     res.status(200).send(users);

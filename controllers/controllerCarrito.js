@@ -9,7 +9,6 @@ const getAllCarts = async (req, res) => {
 const getCartByID = async (req, res) => {
     let carts = await modelCarrito.getCartByID(req.params.id);
     res.status(200).send(carts);
-
 }
 
 const getBigCarts = async (req, res) => {
